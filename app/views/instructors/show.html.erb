@@ -1,0 +1,125 @@
+<div class="profile-container">
+  <% if current_user && current_user.instructor %>
+    <div class="row col-md-12">
+      <h3 class="text-warning">Instructor status: <%= @instructor.status %> </h3>
+      <p class="text-warning">Questions? Email info@snowschoolers.com.</p>
+      <%= link_to 'Edit Your Profile', edit_instructor_path(@instructor), class: 'btn btn-default' %>
+    </div>
+  <% end %>
+<div class="row">
+<div class="col-md-7 instructor-core-info">
+
+  <h1> <%= @instructor.name %>, <%= @instructor.age %> </h1>
+  <h3>
+  <% if @instructor.ski_instructor? %>
+  Skiing <img src= "/assets/skier-icon.ico" class="icons">
+  <% end %>
+  <% if @instructor.snowboard_instructor? %>
+  Snowboarding <img src= "/assets/snowboarder-icon.png" class="icons">
+  <% end %>
+  <% if @instructor.telemark_instructor? %>
+  Telemark <img src= "/assets/telemark-icon.png" class="tele-icon">
+  <% end %>
+  <br>
+  <div class="star-rating" data-score= <%= ((@instructor.average_rating*10).round/10.0) %> >
+  Average Rating: </h3>
+  <h4> Certification Status: <%= @instructor.certification %></h4>
+  <h4> Hometown: <%= @instructor.city %> </h4>
+  <div class="maps-container row">
+    <iframe
+    width="400"
+    height="180"
+    frameborder="0"
+    src="https://www.google.com/maps/embed/v1/place?key=<%= ENV["GOOGLE_MAPS_API"] %>
+      &q=<%= @instructor.city %>" allowfullscreen>
+  </iframe>
+  </div>
+  <!-- <div class="resorts-container col-md-6">
+    <p> Available resorts:</p>
+    <ul class="instructor-resorts">
+      <% @instructor.locations[0..3].each do |location| %>
+        <li><%= location.name %></li>
+      <% end %>
+    </ul>
+  </div> -->
+
+</div>
+
+<div class="col-md-5 instructor-avatar-box">
+  <div class="row">
+      <%= image_tag @instructor.avatar.url(:large), alt:"avatar-img", class:" center img-responsive instructor-profile-photo" %>
+    </div>
+  <h3 class="center">
+    <a href="/new_request/<%=@instructor.to_param%>" class="btn btn-primary btn-lg">Book a lesson with <%= @instructor.first_name %> </a>
+  </h3>
+  <h4 class="center">
+    <a href="/start_conversation/<%=@instructor.id%>" class="btn btn-success">Send <%= @instructor.first_name %> a message</a>
+  </h4>
+</div>
+<div class= "col-md-12">
+<h1 class="center"> About <%= @instructor.name %> </h1>
+<h4>
+  <%= @instructor.bio %>
+</h4>
+</div>
+<div class="col-md-12">
+  <hr class="deposit-hr-navy">
+</div>
+</div>
+
+<% if current_user && current_user.email == "brian@snowschoolers.com" %>
+<section class='admin-viewable'>
+  <h4> ADMIN ONLY: Add a new review manually.</h4>
+  <div class="row col-md-12">
+    <% @lesson = Lesson.new({instructor_id:@instructor.id, requester_id:current_user.id}) %>
+    <% @lesson.review = Review.new unless @lesson.review %>
+    <%= render 'reviews/form' %>
+  </div>
+</section>
+<% end %>
+
+<% if @instructor.reviews.count > 0 %>
+<h1 class="center"> <%= @instructor.name %>'s Recent Reviews </h1>
+<div class="row reviews-container">
+<div class="">
+  <% current_instructor_reviews = @instructor.reviews.sort { |a,b| b.created_at <=> a.created_at } %>
+  <% current_instructor_reviews.each do |review| %>
+    <div class="individual-review">
+      <div class="star-rating" data-score= <%= review.rating %> >
+      </div>
+      <p class="stars-text white-text">
+      <%=review.rating %> of 5 stars
+      </p>
+      <h4> <%= review.review %></h4>
+      <% if review.lesson_id.nil? && review.reviewer.email == "brian@snowschoolers.com"%>
+          <% time_stamp = Lesson.where(state:"Lesson Complete").to_a.sample.created_at.strftime("%B %d, %Y") %>
+        <% else %>
+          <% time_stamp = review.created_at.strftime("%B %d, %Y") %>
+      <% end %>
+      <h5 class="center"> <em> - <%=review.display_name %> on <%= time_stamp %></em></h5>
+    </div>
+    <br>
+    <hr>
+    <br>
+<% end %>
+</div>
+</div>
+<% end %>
+<div class="col-md-12">
+<% if current_user && current_user.email == 'brian@snowschoolers.com' %>
+    <%= link_to 'Edit', edit_instructor_path(@instructor) %> |
+    <%= link_to 'Verify Instructor', edit_user_registration_path(@instructor.user), class: 'btn btn-success' %>
+<% end %>
+<%= link_to 'Back to all instructors', instructors_path, class: 'btn sign-up-btn' %>
+</div>
+<div class="buffer"></div>
+</div>
+<script>
+    $('.star-rating').raty({
+      path: '/assets/',
+      readOnly: true,
+      score: function() {
+            return $(this).attr('data-score');
+    }
+  });
+</script>

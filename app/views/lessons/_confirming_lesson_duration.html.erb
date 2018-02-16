@@ -1,0 +1,35 @@
+<div class="row">
+<% if current_user && (current_user == @lesson.instructor.user || current_user.user_type == "Snow Schoolers Employee") %>
+  <%= semantic_form_for @lesson, url: confirm_lesson_time_path do |f| %>
+  <div class="col-md-4">
+    <%= f.input :actual_start_time, as: :string, input_html: { id: 'start-timepicker' }, class: "end-times" %>
+  </div>
+  <div class="col-md-4">
+    <%= f.input :actual_end_time, as: :string, input_html: { id: 'end-timepicker' }, class: "end-times" %>
+  </div>
+  <div class="col-md-12">
+    <label><b> Lesson Notes & Feedback</b></label>
+    <%= f.input :public_feedback_for_student, as: :text, input_html: { required:true }, placeholder: "Describe each students current ability level and progress made. What should they continue to focus on?", class: "feedback-for-student" , label:false %>
+
+  </div>
+  <div class="col-md-4">  </div>
+  <!-- <div class="col-md-4">
+    <%= f.input :actual_duration, as: :select, collection: [['1.5 hours', 1.5],['2 hours', 2],['2.5 hours', 2.5],['3 hours', 3],['3.5 hours', 3],['4 hours', 4]], class: "duration?" %>
+  </div> -->
+  <div class="col-md-12">
+    <%= f.submit "Confirm Feedback & Lesson Times", class: "btn btn-success" %>
+  </div>
+  <% end %>
+<% elsif current_user.nil? %>
+  <h3>
+    <a href="#" class="btn btn-default" data-toggle="modal" data-target="#loginModal">Log in to update this lesson.</a>
+  </h3>
+<% else %>
+  <div class="col-md-6">
+    <h4 class="alert-warning  ">
+      Waiting for instructor to confirm lesson start and end times.
+    </h4>
+  </div>
+<% end %>
+</div>
+<hr>

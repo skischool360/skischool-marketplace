@@ -1,0 +1,219 @@
+.search-form{
+  width: 350px;
+  display: inline-block;
+  line-height: 1.5;
+  /*font-size: 0.7em;*/
+  height: 50px;
+}
+.li-inline-block{display:inline-block;}
+.pass-search-form{
+  width: 80%;
+  display: inline-block;
+  line-height: 1.5;
+  font-size: 0.7em;
+  height: 50px;
+}
+.search-form-serp{
+  font-size: 1.2em;
+  height: 50px;
+}
+#primary-search-bar h2{
+  margin-bottom: 0px;
+}
+.primary-search-form {
+  margin: auto;
+  position: relative;
+  width: 50%;
+}
+.full-hr{
+  max-width:90vw !important;
+  border: solid 1px #3b5998;
+}
+#secondary-search-filters{
+  float:left;
+  width: 20%;
+  max-width:250px;
+  min-height: 70vh;
+  border: solid 1px #3b5998;
+  background-color: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 25px;
+}
+#search-results-section{
+  float:left;
+  padding-left: 30px;
+  width: 80%;
+  max-width: 870px;
+}
+.search-results-card{
+  background-color:#d9e9f7;
+  border: solid 1px #3b5998;
+  padding: 10px 10px 10px 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 160px;
+}
+.inactive-partner{
+  background-color: #bfb7b7;
+}
+.calendar-period{
+  font-style: italic;
+}
+.product-name{
+    font-size: 1.9em;
+}
+.location-name{
+    margin-bottom: 0px;
+    font-size: 1.7em;
+    text-align: center;
+}
+.location-logo-index{
+  height:50px;
+}
+.location-logo{
+  max-height: 110px;
+  width: auto;
+  max-width: 95%;
+  left: -10%;
+  position: relative;
+  vertical-align: middle;
+}
+.location-logo-section{
+  height: 120px;
+}
+.price-offset{
+  position: relative;
+  left: -15px;
+}
+.helper{
+  display: inline-block;;
+  height: 100%;
+  vertical-align: middle;
+}
+.products-cta{
+  margin-bottom: 0px;
+}
+#lesson-length-filter ul, #online-booking-filter ul, .location-details ul, #resort-filter ul{
+  list-style-type: none;
+  text-align: left;
+  padding-left: 5px;
+
+}
+.location-details ul li {
+    font-size: 1.3em;
+    padding-bottom: 15px;
+    left: -40px;
+    position: relative;
+}
+.filter-heading{
+  padding-right: 5px;
+}
+#sort_tag, #search_slot{
+  
+}
+#secondary-search-filters div h3 {
+  color: #3b5998;
+  text-transform: uppercase;
+}
+.section-pass-search-results{
+  color: #000 !important;
+}
+.product-price{
+  font-size: 2.0em;
+}
+.season-pass-subheader p {
+  font-size: 1.4em !important;
+}
+.season-pass-subheader{
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+.season-pass-header{
+  font-size: 40px !important;
+}
+.update-filter-cta{
+  margin-top: 10px;
+}
+.resort-location-serp{
+  color: #000;
+  max-width: 80%;
+  font-size: 0.8em;
+  font-style: italic;
+}
+.closed-for-season h4, .closing-date h4{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 1.4em;
+  font-style: italic;
+}
+.closed-for-season h1, .closing-date h1{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.closed-for-season h1, .closed-for-season li, .closed-for-season a {
+  text-decoration: line-through;
+}
+
+
+/*BEGIN MOBILE STYLE ADJUSTMENTS*/
+@media (max-width: 768px) {
+.search-results-card{
+  height:20%;
+}
+.search-form{
+  width:90%;
+  margin-bottom: 10px;
+}
+#primary-search-bar h2{
+  font-size: 1.7em;
+  line-height: 1.4;
+}
+#search-results-section{
+  width: 100%;
+  padding-left: 0px;
+}
+.location-logo-section{
+  height:70px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.location-logo{
+  max-height: 95%;
+  max-width: 55%;
+  float: left;
+  left: 0px;
+}
+.mobile-price{
+  display: inline-block;
+  float: right;
+}
+.location-details ul li {
+    font-size: 1.1em;
+    left: 0px;
+}
+.product-name{
+  font-size: 1.3em;
+  font-weight: bold;
+}
+#secondary-search-filters {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    padding-bottom: 30px;
+}
+.mobile-btn-text{
+  font-size: 1.7em !important;
+}
+.update-filter-cta{
+}
+.resort-location-serp{
+  max-width: 100%;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+}

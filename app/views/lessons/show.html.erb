@@ -1,0 +1,71 @@
+<div id="middle" class="container">
+  <div class="white row">
+
+    <% if current_user && current_user.email == "brian@snowschoolers.com"%>
+    <div class="row vertical-padding container admin-viewable">
+    <h4> (ADMIN ONLY) Eligible instructors are:</h4>
+      <ul>
+        <% if @lesson.available_instructors.any? %>
+            <% @lesson.available_instructors.each do |instructor| %>
+            <h6> <%= instructor.name  %> - <%= instructor.user_id %> - <%= instructor.phone_number %>
+            <%= link_to "Send Instructor SMS", send_reminder_sms_to_instructor_path(@lesson, :instructor_id => instructor.id), class: "btn btn-warning" %></h6>
+            <% end %>
+          <% else %>
+          <li><p class="alert-danger">No instructors available!</p></li>
+          <% end %>
+          <li>Client phone number: <%= @lesson.phone_number %> </li>
+      </ul>
+        <%= link_to 'Edit Lesson', edit_lesson_path(@lesson), class: "btn btn-default" %>
+        <%= link_to "Reconfirm state", admin_reconfirm_state_path, method: :put, class: "btn btn-default" %>
+    </div>
+    <% end %>
+
+    <% if @lesson.state == "ready_to_book" && @lesson.deposit_status.nil? %>
+      <%= render partial: 'confirm_reservation' %>
+    <% end %>
+
+    <% if current_user && current_user.instructor.nil? && @lesson.state == "booked" || @lesson.state == "confirmed" %>
+      <!-- <script src="https://www.smartwaiver.com/m/webpl/f.js?webpl_waiver=584daa0c8f287&webpl_title=Please%20now%20sign%20your%20waiver&webpl_align=Left&webpl_fontsize=20&webpl_background=%2355c9b2&webpl_fontcolor=%23ffffff&webpl_font=Verdana" type="text/javascript"></script> -->
+    <% end %>
+
+    <% if @lesson.finalizing? %>
+      <%= render partial: 'confirming_lesson_duration' %>
+    <% end %>
+
+    <% if @lesson.waiting_for_payment? && (current_user == @lesson.requester || current_user && current_user.user_type == "Snow Schoolers Employee" || (@lesson.guest_email && current_user.nil?) || @lesson.guest_email && current_user && current_user.instructor.nil? ) %>
+      <%= render partial: 'make_payment' %>
+      <% elsif @lesson.waiting_for_payment? && current_user.instructor %>
+          <div class="alert alert-success alert-dismissible fade in" role="alert">
+            <p>Your student has been notified and prompted to complete and provide their review of the lesson.</p>
+          </div>
+          <%= link_to "Edit Lesson Times", mark_lesson_complete_path, method: :put, class: "btn btn-success" %>
+    <% end %>
+
+    <% if @lesson.waiting_for_review? && (current_user == @lesson.requester || @lesson.guest_email || current_user && current_user.user_type == "Snow Schoolers Employee") %>
+      <%= render partial: 'reviews/form' %>
+      <% elsif @lesson.waiting_for_review? && (current_user.instructor || current_user.user_type == "Snow Schoolers Employee") %>
+          <%= link_to "Remind student to submit their review", mark_lesson_complete_path, method: :get, class: "btn btn-success" %>
+    <% end %>
+
+    <% if @lesson.confirmable? || @lesson.completable? || @lesson.active? %>
+      <%= render partial: 'lesson_actions_active' %>
+    <% end %>
+
+    <%= render partial: 'lesson_details' %>
+
+
+
+    <% if @lesson.canceled? %>
+      <p>Lesson has been canceled.</p>
+    <% end %>
+
+  </div>
+</div>
+
+<!-- SLIDER -->
+<!-- <img id="cycle-loader" src="https://s3.amazonaws.com/snowschoolers/images/spinner.gif" alt="loader" /> -->
+
+<ul id="slider" class="mc-cycle" style="display: block; height: 100%; width: 100%;">
+    <div class="mc-image bg-photo" title="background photo" style="background-image: url('https://s3.amazonaws.com/snowschoolers/images/demo/slider/thredbo-sunrise.jpg'); height: 100%; width: 100%;" data-href=""    
+    </div>
+</ul>

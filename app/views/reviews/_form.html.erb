@@ -1,0 +1,120 @@
+<% @lesson.review = Review.new unless @lesson.review %>
+<%= semantic_form_for @lesson.review do |f| %>
+  <%= f.inputs do %>
+  <div class="review-id-inputs hidden">
+    <%= f.input :instructor_id, :input_html => {value: @lesson.instructor.id, class:'form-control'}, label: false %>
+    <%= f.input :lesson_id,  :input_html => {value: @lesson.id, class:'form-control'}, label: false %>
+    <%= f.input :reviewer_id,  :input_html => {value: @lesson.requester.id, class:'form-control'}, label: false %>
+  </div>
+    <!-- %= f.input :rating %> -->
+
+
+<div class="nps-field col-md-12" >
+  <h2 class="nps-question">How likely is it that you would recommend Snow Schoolers to a friend?</h2>
+  <span class="nps-rating col-md-12 col-xs-12">
+    <input type="radio" class="nps-rating-input" id="review_nps_10" name="review[nps]" value="10">
+    <label for="review_nps_10" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">10</span>
+    </label>  
+
+    <input type="radio" class="nps-rating-input" id="review_nps_9" name="review[nps]" value="9">
+    <label for="review_nps_9" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">9</span>
+    </label>
+
+    <input type="radio" class="nps-rating-input" id="review_nps_8" name="review[nps]" value="8">
+    <label for="review_nps_8" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">8</span>
+    </label>
+
+    <input type="radio" class="nps-rating-input" id="review_nps_7" name="review[nps]" value="7">
+    <label for="review_nps_7" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">7</span>
+    </label>
+
+    <input type="radio" class="nps-rating-input" id="review_nps_6" name="review[nps]" value="6">
+    <label for="review_nps_6" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="Not Likely">
+      <span class="nps-rating-number">6</span>
+    </label>
+        <input type="radio" class="nps-rating-input" id="review_nps_5" name="review[nps]" value="5">
+    <label for="review_nps_5" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">5</span>
+    </label>  
+
+    <input type="radio" class="nps-rating-input" id="review_nps_4" name="review[nps]" value="4">
+    <label for="review_nps_4" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">4</span>
+    </label>
+
+    <input type="radio" class="nps-rating-input" id="review_nps_3" name="review[nps]" value="3">
+    <label for="review_nps_3" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">3</span>
+    </label>
+
+    <input type="radio" class="nps-rating-input" id="review_nps_2" name="review[nps]" value="2">
+    <label for="review_nps_2" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="">
+      <span class="nps-rating-number">2</span>
+    </label>
+
+    <input type="radio" class="nps-rating-input" id="review_nps_1" name="review[nps]" value="1">
+    <label for="review_nps_1" class="nps-rating-star" data-toggle="tooltip" data-placement="top" title="Not Likely">
+      <span class="nps-rating-number">1</span>
+    </label>
+  </span>
+  <div class="col-md-12">
+    <div class="col-md-3 col-xs-7"> <h3 class="left navy-text">Not at all likely</h3></div>
+    <div class="col-md-6 col-xs-0"></div>
+    <div class="col-md-3 col-xs-5"> <h3 class="right navy-text">Very likely</h3></div>
+  </div>
+</div>
+
+<div class="row clear">
+    <hr class="deposit-hr-navy">
+</div>
+
+<div class="star-ratings-field col-md-12" >
+  <h2 class="nps-question">Please rate your instructor on the overall quality of your instructor:</h2>
+  <span class="instructor-rating">
+
+    <input type="radio" class="rating-input" id="review_rating_5" name="review[rating]" value="5" >
+    <label for="review_rating_5" class="rating-star" data-toggle="tooltip" data-placement="top" title="Outstanding">
+      <span class="rating-text">Outstanding</span>
+    </label>
+
+    <input type="radio" class="rating-input" id="review_rating_4" name="review[rating]" value="4">
+    <label for="review_rating_4" class="rating-star">
+      <span class="rating-text">Very Good</span>
+    </label>
+
+    <input type="radio" class="rating-input" id="review_rating_3" name="review[rating]" value="3">
+    <label for="review_rating_3" class="rating-star">
+      <span class="rating-text">Acceptable</span>
+    </label>
+
+    <input type="radio" class="rating-input" id="review_rating_2" name="review[rating]" value="2">
+    <label for="review_rating_2" class="rating-star">
+      <span class="rating-text">Not okay</span>
+    </label>
+
+    <input type="radio" class="rating-input" id="review_rating_1" name="review[rating]" value="1">
+    <label for="review_rating_1" class="rating-star">
+      <span class="rating-text">Awful</span>
+    </label>
+
+</span>
+</div>
+
+<div class="row clear">
+    <hr class="deposit-hr-navy">
+</div>
+
+<div class="free-response-review">
+    <h4>What did you like most about your instructor? Is there anything could have done to improve? (optional)</h4>
+    <%= f.input :review, placeholder: 'He or she was full of energy and provided very clear explanations and easy to follow demonstrations of the drills we practiced.', required: false, label: false %>
+</div>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :as => :input, label: "Submit Review", button_html: {class: "btn btn-xl btn-primary"} %>
+  <% end %>
+<% end %>

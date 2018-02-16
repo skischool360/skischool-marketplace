@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <% if @lesson.guest_email.nil? %>
+      <p>Hello <%= @lesson.requester.name.split(" ").first %>,</p>
+      <% else %>
+      <p>Hello,</p>
+    <% end %>
+
+    <p>
+      Good news! One of our expert instructors, <%=@lesson.instructor.name %>, has confirmed your lesson request. Please review your instructor's info and the details of your lesson below, and don't be afraid to <a href="mailto:info@snowschoolers.com">reach out to us</a> if you have any questions. You may also reach your instructor directly the day of your lesson using their contact info below.
+    </p>
+
+    <h4>Meeting Location</h4>
+    <p>Please plan to meet <%=@lesson.instructor.first_name %> outside at the Private Lessons flag at the Homewood North Lodge a few minutes before the scheduled start of your lesson, as depicted below. The lodge is located at <a href="https://www.google.com/maps/place/Homewood+Mountain+Resort/@39.086085,-120.1627817,17z/data=!4m12!1m6!3m5!1s0x809bd57fbf0e6771:0x6cdf8953d18f267f!2sSR+89+Homewood+(Homewood+Mountain+Resort)!8m2!3d39.086085!4d-120.160593!3m4!1s0x0:0x73b0c46aa0c1068d!8m2!3d39.0855831!4d-120.1605392" >5145 W Lake Blvd, Homewood, CA 96141</a>. If you would like to meet somewhere else, such as inside the lodge or in a lift line, please be sure to message your instructor ahead of time. </p>
+    <img src="https://s3.amazonaws.com/snowschoolers/north-lodge-meeting-location.jpg" alt="meeting-spot" height="400" width="700" />
+
+    <h4>Lesson Details</h4>
+    <ul>
+      <li>Instructor Name: <%= link_to @lesson.instructor.name, @lesson.instructor %></li>
+      <li>Instructor phone number: <%= @lesson.instructor.phone_number %>; Feel free to contact your instructor directly the day of your lesson if you have any questions. </li>
+      <li>Your phone number: <%= @lesson.phone_number %>; You will receive SMS notifications only regarding <b> this lesson request </b>; your number will never be used for marketing notifications nor shared with any third parties. </li>
+      <li>Students: <%= @lesson.students.map(&:name).join(', ') %></li>
+      <li>Date: <%= @lesson.date.strftime("%A %b #{@lesson.date.day.ordinalize}, %Y") %></li>
+      <li>Slot: <%= @lesson.slot %></li>
+      <li>Location: <%= @lesson.location.name %></li>
+      <li>Objectives: <%= @lesson.objectives %></li>
+    </ul>
+    <p>
+      If you need to make changes to your lessons, please visit: <%= lesson_url(@lesson) %>
+    </p>
+    <% if @lesson.gear == false %>
+      <h4>Rental Equipment</h4>
+      <p>Private lessons at Homewood with Snow Schoolers do not include rentals, unless you have chosen to purchase the beginner rental and lift ticket package in addition to your lesson. If you'd like to add that to your reservation, simply email us back at <a href="mailto:support@snowschoolers.com">support@snowschoolers.com and let us know!</p>
+      <p>If you just need rentals, we're happy to make some recommendations:</p>
+      <ul>
+        <li> The cheapest option for rentals is generally in metro areas such as the Bay Area and Sacramento. We are personally big fans of the <a href="https://rentals.sportsbasement.com/rent/ski-rentals/adult-basic-ski-package">Sports Basement</a>, which offers 4-day rentals for $55.</li>
+        <li>The next most affordable option is to rent from a retail shops in the Tahoe area. We recommend <a href="https://rentals.tahoedaves.com/">Taheo Dave's</a>, which has five locations in North Tahoe with beginner packages for $32/day.
+        </li>
+        <li>
+          The <b>most convenient option</b> for getting your rental equipment is to book in advance through <a href="www.snowschoolers.com/skibutlers">Ski Butlers</a>, which is an equipment delivery service that let's you schedule a delivery and boot fitting the night before at your hotel or cabin. As an official partner of ours, Ski Butlers will automatically give all Snow Schoolers customers a 10% on their rental. With those discounts, you can purchase a basic adult rental package just $37/day, or for kids 12 and under it is just $26/day.
+        </li>
+        <li>Lastly, if you forget to plan ahead, you can always rent equipment from Homewood the morning of your lesson. Pricing is typically a bit more expensive, but you get the convenience of not having to fit skis in your car. Please give yourself at least an extra 30 minutes before your lesson if you are planning to rent from the mountain. </li>
+      </ul>
+    <% end %>
+
+    <h4>Lift Tickets</h4>
+      <p>
+        You will also need to obtain a lift ticket or season pass in advance of your Snow Schoolers lesson. The easiest and most affordable way to purchase your lift ticket is online at <a href="http://cloudstore.skihomewood.com/categories/all-tickets">www.skihomewood.com</a>.
+      </p>
+      <ul>
+        <li> Homewood's online ticket sales are powered by <a href="http://about.liftopia.com/platform/details/">Liftopia</a>, which deploys a dynamic pricing engine that rewards guests with the lowest prices when you purchase tickets in advance, with tickets as low as $49 per day.</li>
+        <li>If your lesson is schedule for the middle of a non-holiday week, the savings may only be minimal (~10%), but if your trip is planned for a weekend or holiday, savings can be upwards of ~30-40%, so we would strongly advise purchasing your tickets in advance.</li>
+        <li>Note that if you do buy your ticket online, please be sure to have your online email receipt easily accessible to display at the ticket counter, where a friendly member of the Homewood staff will redeem your online purchase with a paper lift ticket.</li>
+      </ul>
+
+    <p>If you have any questions or if there is anything we can do to help you prepare for your upcoming lesson, please don't be afraid to reach out. Happy Trails!</p>
+    <p>
+      - The Snow Schoolers Team <br>
+      p.s. You can now follow us on Social Media! <br>
+      <a href="https://www.facebook.com/snowschoolers2016" class="socialbtn facebook"><i class="fa fa-facebook"></i>Facebook</a> <br>
+      <a href="https://twitter.com/snowschoolers" class="socialbtn twitter"><i class="fa fa-twitter"></i>Twitter</a> <br>
+      <a href="https://www.youtube.com/channel/UCHhUiwRmAQSrmzNUimeP7Uw" class="socialbtn youtube">Youtube</a>
+    </p>
+  </body>
+</html>

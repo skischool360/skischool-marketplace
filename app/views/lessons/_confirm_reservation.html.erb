@@ -1,0 +1,75 @@
+<div class="col-md-12">
+        <%= form_tag confirm_reservation_path do %>
+
+          <%= hidden_field_tag 'ga_client_id', '', :class => 'ga-client-id' %>
+          <article>
+            <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+            <% end %>
+            <h1>Authorize Payment to Secure your Reservation</h1>
+            <div class="col-md-3">
+              <h4>
+                <b>Lesson Date:</b>  <br>
+                <% if @lesson.num_days && @lesson.num_days > 1 %>
+                  Number of consecutive days:
+                <% end %>
+                <b>Lesson Time:</b>  <br>
+                <b>Meeting Location:</b> <br>
+                <b>Price:</b> <br>
+                <%if @lesson.includes_lift_or_rental_package? || @lesson.is_gift_voucher? %>
+                <b>Description:</b> <br>
+                <% end %>
+              <%= link_to 'Edit Lesson', edit_lesson_path(@lesson), class: "btn btn-default" %>
+              </h4>
+            </div>
+            <div class="col-md-9">
+              <h4>
+                <% if @lesson.is_gift_voucher? %>
+                  TBD <br>
+                  <% else %>
+                  <%= @lesson.lesson_time.date.strftime("%A %b #{@lesson.lesson_time.date.day.ordinalize}, %Y") %> <br>
+                <% end %>
+                <% if @lesson.num_days && @lesson.num_days > 1 %>
+                  <%= @lesson.num_days %>
+                <% end %>
+                <%= @lesson.lesson_time.slot %> <br>
+                Homewood North Lodge  (<a href="https://www.google.com/maps/place/Homewood+Mountain+Resort/@39.086085,-120.1627817,17z/data=!4m12!1m6!3m5!1s0x809bd57fbf0e6771:0x6cdf8953d18f267f!2sSR+89+Homewood+(Homewood+Mountain+Resort)!8m2!3d39.086085!4d-120.160593!3m4!1s0x0:0x73b0c46aa0c1068d!8m2!3d39.0855831!4d-120.1605392" >5145 W Lake Blvd, Homewood, CA 96141</a>) <br>
+              <% if @lesson.lesson_price.nil? %>
+                <% amount = @lesson.price.to_i*100 %>
+                <%= number_to_currency(@lesson.price) %>
+              <% else %>
+                <%= number_to_currency(@lesson.lesson_price.to_s) %>
+                <% amount = @lesson.lesson_price.to_i*100 %>
+              <% if @lesson.includes_lift_or_rental_package? || @lesson.is_gift_voucher? %>
+                   <br> <%= @lesson.package_info %>
+              <% end %>
+              <% end %>
+              </h4>
+            </div>
+            <div class="col-md-12"
+              <label class="amount">
+              </label>
+              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                      data-description="Thanks for booking with Snow Schoolers!"
+                      data-name="Snow Schoolers"
+                      data-image="https://s3.amazonaws.com/snowschoolers/SnowSchoolers-favicon.png"
+                      data-amount=<%= amount %>
+                      data-locale="auto"
+                      data-zip-code="true">
+              </script>
+                  <p class="nonrefundable_disclaimer">
+                  <br>
+                    You may cancel or modify your reservation up to 24 hours before the start of your lesson. A $50 charge will be applied for any customer-initiated cancellations made after your reservation has been made. Any cancellation made less than 24 hours before the lesson time will be charged the full amount, regardless of weather conditions. A no-call/no-show will be charged the full amount. If for any reason you are unsatisfied with your Snow Schoolers experience, please <a class="contact-link" href="mailto:info@snowschoolers.com">ask about our 100% satisfaction guarantee.</a>
+                </p>
+            </div>
+        </article>
+
+        <% end %>
+<div class="col-md-12">
+  <hr class="deposit-hr-navy">
+</div>
+
+</div>

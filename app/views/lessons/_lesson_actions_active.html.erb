@@ -1,0 +1,32 @@
+<div class='active-actions'>
+  <% if current_user.nil? %>
+    <h3>
+      <a href="#" class="btn btn-default" data-toggle="modal" data-target="#loginModal">Log in to update this lesson.</a>
+    </h3>
+  <% end %>
+  <% if current_user && current_user.instructor && @lesson.confirmable? && @lesson.available_instructors.include?(current_user.instructor) %>
+    <%= button_to "Accept Lesson Request", set_instructor_path, method: :put, class: "btn btn-success" %>
+    <br>
+    <%= button_to "Decline Lesson Request", decline_instructor_path, method: :put, class: "btn btn-danger" %>
+  <% end %>
+
+  <% if current_user && current_user.instructor && @lesson.instructor_accepted? && @lesson.instructor && (current_user == @lesson.instructor.user || current_user.email == "brian@snowschoolers.com") %>
+    <% if @lesson.pending_instructor? %>
+      <%= link_to "Confirm Updates", set_instructor_path, method: :put, class: "btn btn-default" %>
+    <% end %>
+    <%= link_to "Drop It", remove_instructor_path, method: :put, class: "btn btn-warning" %>
+    <%= link_to "Mark Lesson Complete", mark_lesson_complete_path, method: :put, class: "btn btn-success" %>
+  <% end %>
+
+  <% if current_user && current_user == @lesson.requester %>
+    <% if @lesson.is_gift_voucher? && @lesson.state == "gift_voucher_reserved" && current_user.email == @lesson.gift_recipient_email.downcase %>
+      <%= link_to 'Book Lesson Dates', edit_lesson_path(@lesson), class: "btn btn-default" %>
+      <% else %>
+      <%= link_to 'Edit Lesson', edit_lesson_path(@lesson) %>
+      <%= link_to 'Cancel Lesson', @lesson, method: :delete, class: "btn btn-warning" %>
+    <% end %>
+    <% if @lesson.instructor %>
+    <%= link_to "Mark Lesson Complete", mark_lesson_complete_path, method: :put, class: "btn btn-success" %>
+    <% end %>
+  <% end %>
+</div>

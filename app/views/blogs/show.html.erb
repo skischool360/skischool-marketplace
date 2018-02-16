@@ -1,0 +1,60 @@
+<% title @blog.title %>
+<% meta_tag :description, "Snow Schoolers is an online platform for private ski & snowboard lessons. Easily browse profiles & reviews, then book a private ski or snowboard lesson  with our fleet of expert, certified instructors. We collaborate closely with each of our ski area partners to ensure a consistent brand experience while maximizing the financial return of ski school operations to the mountain." %>
+
+<div class="profile-container">
+
+<div class="content-area col-lg-12 col-xs-12">
+<div class="center row hidden">
+  <%= image_tag @blog.cover_photo.url(:large), class:"cover-photo" %>
+</div>
+<div class="title-author-top">
+  <p>
+    <h1>
+      <strong>
+      <%= @blog.title %>
+      </strong>
+    </h1>
+    <p>
+      <strong>By: <%= @blog.author %> </strong> |  <em>Published:  <%= @blog.time_since_written %> </em>
+    </p>
+  </p>
+  <hr>
+</div>
+<div id="blog-content">
+  <%= raw(@blog.content) %>
+</div>
+  <hr>
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//www-snowschoolers-com.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<% if user_signed_in? && (current_user.email == "brian@snowschoolers.com" || current_user.email == "abensch66@gmail.com") %>
+    <%= link_to edit_blog_path(@blog), class:"btn btn-default" do %>
+    <i class="glyphicon glyphicon-pencil">Edit</i>
+      <%end%>
+  <%end%>
+<%= link_to 'Back to Blog', blogs_path, class:"btn btn-default" %>
+</div>
+</div>
+<hr>
+<div class="buffer"></div>
+</div>

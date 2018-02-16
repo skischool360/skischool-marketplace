@@ -1,0 +1,46 @@
+<div class='nested-fields student-box'>
+  <%= f.inputs do %>
+    <div class='row'>
+      <div class='col-md-6'>
+        <label>Student Name</label>
+        <span class='remove-student'>(<%= link_to_remove_association "Remove Student", f, class: 'remove-student' %>)</span>
+        <%= f.input :name, placeholder: "Full name of student", label: false %>
+      </div>
+      <div class='col-md-3'>
+        <label>Age</label>
+        <%= f.input :age_range, as: :string, label: false %>
+      </div>
+      <div class='col-md-3'>
+        <label>Gender</label>
+        <%= f.input :gender, as: :select, collection: ['Male', 'Female'], include_blank: 'Gender', :input_html => { :class => 'gender'}, label: false %>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+        <label>About the student</label>
+        <%= f.input :relationship_to_requester, as: :select, collection: ['I am the student.', 'Student is a friend.', 'Student is my significant other.','Student is my child.'], selected: 'I am the student.', include_blank: 'How is this student related to you?', :input_html => { :class => 'relationship-student'}, label: false %>
+      </div>
+      <div class='col-md-12'>
+            <label>Ability level </label>
+            <%= f.input :most_recent_level, as: :select, collection:
+              ["Level 1 - first-time ever, no previous experience.",
+              "Level 2 - can safely stop on beginner green circle terrain.",
+              "Level 3 - can makes wedge turns (heel-side turns for snowboarding) in both directions on beginner terrain.",
+              "Level 4 - can link turns with moderate speed on all beginner terrain.",
+              "Level 5 - can make mostly parallel turns (S-turns for snowboarding) and safely navigate intermediate runs.",
+              "Level 6 - can confidently link parallel turns across all intermediate terrain.",
+              "Level 7 - can control speed, rhythm, and shape of turns across variety of intermediate and advanced terrain.",
+              "Level 8 - can ski moguls and off-piste terrain in all snow conditions.",
+              "Level 9 - can confidently and safely ski expert-only (double-black diamond) terrain."],
+               include_blank: "Approximately what level of ability is the student?", :input_html => { :class => 'ability-level'}, label: false %>
+      </div>
+      <!-- <div class='col-md-12'>
+            <label>Other sports experience </label>
+            <%= f.input :other_sports_experience, placeholder: 'plays recreational soccer, is a varsity tennis player, casual runner, etc.', label: false %>
+      </div> -->
+          <% if current_user %>
+          <%= f.input :requester_id, as: :hidden, input_html: { value: current_user.id } %>
+          <% end %>
+    </div>
+  <% end %>
+</div>

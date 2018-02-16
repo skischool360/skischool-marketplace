@@ -1,0 +1,340 @@
+<% title "The Complete Guide to Tahoe" %>
+<% meta_tag :description, "A complete beginner's guide to Tahoe for groups or families planning a ski or snowboard trip to Lake Tahoe. Recommendations for places to stay, where to eat, how to get there, and most importantly, where to ski." %>
+
+    <section id="header-creative" class="top-section guide-intro">
+        <div id="player" class="video-background hidden-unless-desktop"></div>
+
+        <script>
+              // 2. This code loads the IFrame Player API code asynchronously.
+              var tag = document.createElement('script');
+              tag.src = "https://www.youtube.com/iframe_api";
+              var firstScriptTag = document.getElementsByTagName('script')[0];
+              firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+              // 3. This function creates an <iframe> (and YouTube player)
+              //    after the API code downloads.
+              var player;
+              function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                  height: '100%',
+                  width: '100%',
+                  videoId: 'ebySUnXKgRw',
+                  events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                  }
+                });
+              }
+              // 4. The API will call this function when the video player is ready.
+              function onPlayerReady(event) {
+                   event.target.setVolume(0);
+               event.target.playVideo();
+              }
+              // 5. The API calls this function when the player's state changes.
+              //    The function indicates that when playing a video (state=1),
+              //    the player should play for six seconds and then stop.
+              var done = false;
+              function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING && !done) {
+            //      setTimeout(stopVideo, 6000);
+                          // done = true;
+                }
+                event.target.setVolume(0);
+                event.target.playVideo();
+              }
+        </script>
+
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading" class="">The Complete Guide to Tahoe<br>
+                <span class="smaller-text"></span>
+                </h1>
+                <hr>
+                <div class=" hero-subtext">
+                <p class="font-smaller beginner-intro"> So you’ve heard conditions are <a href="http://abc7news.com/weather/winter-storm-brings-plenty-of-snow-to-tahoe-ski-resorts/1701761/" class="green-link" target="_blank">the best ever</a>...</p>
+                <ul class="beginner-intro-questions">
+                    <li>But how do I get there?</li>
+                    <li>Where should I stay? </li>
+                    <li>What are chains? </li>
+                </ul>
+                <p class="font-smaller"> We know that planning a trip to Tahoe takes a lot of <b>hard work</b>, so we made this guide to help you each step of the way.</p>
+                </div>
+                <a href="#TOC" class="btn btn-primary btn-lg page-scroll">Get Started</a>
+            </div>
+            <hr>
+        </div>
+    </section>
+
+    <section id="TOC" class="pricing-section">
+        <div class="container">
+            <div class="row about-us">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading how-it-works navy-text">Tahoe Trip Planning 101
+                    </h2>
+                      <p class="skip-to-bottom"><span class="jump-below">(click menu items to jump below)</span></p>
+                    <ul class="toc-sections navy-text">
+                      <li><a class="navy-link" href="#about-tahoe">North Lake vs South Lake?</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#how-to-get-here">How to get here?</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#accommodations">Where to stay?</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#resorts">Where to ski?</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#tickets-and-rentals">Need rentals and/or lift tickets?</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#other-activities">What if I don't ski?</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#places-to-eat">Places to eat</a>                    
+                      </li>
+                      <li><a class="navy-link" href="#apres">Après ski, bars and other nightlife</a>                  
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="center navy-text">
+                  <h4 class="italic"> Prefer personalized support from one of our ski vacation concierges? 
+                  <br>
+                  <br>
+                  Enter your email and/or phone number below to be contacted within 24 hours.</h4>
+                  <div class="col-md-12 beta_user-sign-up">
+                        <%= form_for(@beta_user = BetaUser.new) do |f| %>
+                          <% if @beta_user.errors.any? %>
+                            <div id="error_explanation">
+                              <h2><%= pluralize(@beta_user.errors.count, "error") %> prohibited this beta_user from being saved:</h2>
+                              <ul>
+                              <% @beta_user.errors.full_messages.each do |message| %>
+                                <li><%= message %></li>
+                              <% end %>
+                              </ul>
+                            </div>
+                          <% end %>
+                          <div class="email-input">
+                            <%= f.email_field :email, autofocus: false, class:"black-text form-control beta-sign-up", placeholder:"Enter Email (required)", required: true  %>
+                            <%= f.text_field :phone_number, autofocus: false, class:"black-text form-control beta-sign-up", placeholder:"XXX-XXX-XXXX (optional)", required: false  %>
+                            <div class="hidden">
+                                <%= f.text_field :user_type, :value => "beginner_concierge"  %>
+                            </div>
+                          <%= f.submit "Request a Free Concierge", class:"btn btn-success btn-xl page-scroll" %>
+                          <!-- <h3 class="offer-limitations">*First 100 sign ups receive 20% off their first lesson.</h3> -->
+                          </div>
+                        <% end %>
+                    </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+              <hr class="deposit-hr-navy">
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-primary" id="about-tahoe">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xs12 text-center">
+                    <h2 class="section-heading how-it-works white-text">About Lake Tahoe</h2>
+                    <img src="https://s3.amazonaws.com/snowschoolers/map-ski-resorts-tahoe.jpg" alt="tahoe-map" class="hp-photo-margin">
+                    <p class="solid-box-highlight white-text about-tahoe">
+                        Lake Tahoe is the largest alpine lake in North America, situated on the border between California and Nevada. At 22 miles long and 12 miles wide, getting from one side to the other is no small feat. So your first decision to make is whether you want to visit <b> North Tahoe</b> or <b> South Lake Tahoe</b>.
+                    </p>
+                    <ul class="north-vs-south">
+                        <li> <b> North Tahoe</b> is known for its many cabins and quiet, small mountain-town feel. It is a bit more spread out, and there are eight major ski resorts to choose from.<br><br></li>
+                        <li> <b> South Lake Tahoe</b> is much more centralized, and is known for its casinos, hotels, and a full suite of nightlife options for tourists. There are three major resorts on the south shore.</li>
+                    </ul>
+                    <h3 class="beta-sign-up-offer text-left">
+                    </h3>
+                    <hr class="light text-center">
+                    <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-to-get-here" class="bg-white">
+      <h2 class="section-heading how-it-works navy-text center">How to get here?</h2>
+          <div class="container">
+              <div class="col-md-8">
+                <p class="about-tahoe navy-text">
+                Like most places in the year 2017, you can plug in any ski resort or hotel to <a href="maps.google.com">Google Maps</a>, and you'll *likely* be fine. However, when there is active weather, online maps are rarely updated in realtime for live road conditions. Especially this winter, road closures and detours are sufficiently likely that it is <b> always </b> worth checking the <a href="http://www.dot.ca.gov/hq/roadinfo/mtnhwys.htm" class="green-link" target="_blank">Caltrans website</a> for road conditions before (and during) your trip. 
+                <br>
+                <br>
+                If you end up taking a lesson with us, all of our lessons for the '16/17 season take place </b> at Homewood, which is located at <a href="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d396287.61465083313!2d-120.1892099!3d39.1065387!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80997fda4762005f%3A0x73b0c46aa0c1068d!2sHomewood+Mountain+Resort!5e0!3m2!1sen!2sus!4v1486976192538" class="green-link" target="_blank">5145 W Lake Blvd, Homewood, CA 96141</a>, which is on the west shore of Lake Tahoe, 10 minutes from Tahoe city.
+                </p>
+              </div>
+              <div class="col-md-4">
+                <div class="maps-container row">
+                  <iframe
+                  width="350"
+                  height="280"
+                  frameborder="0"
+                  src="https://www.google.com/maps/embed/v1/place?key=<%= ENV["GOOGLE_MAPS_API"] %>
+                    &q=Homewood+Mountain+Resor" allowfullscreen>
+                </iframe>
+                </div>
+              </div>
+            <div class="col-md-12">
+              <hr class="deposit-hr-navy">
+            </div>
+              <h2 class="navy-text center"> Tips for Driving to Lake Tahoe</h2>
+               <ul class="north-vs-south navy-text">
+                    <li> There's only two main highways into or out of Tahoe. <b> Interstate 80</b> is the primary route for those visiting North Tahoe, while <b> Highway 50</b> is the road to get into South Lake Tahoe. I-80 is two lanes each direction the whole way, which means it can accommodate a bit more traffic flow, but it is also a major trucking route, so you will have to deal with passing trucks slowly making the climb. US-50 is one lane each way once you get past the foothills, with occasional passing lanes.
+                    </li>
+                    <br>
+                    <li>
+                      <b>Plan around traffic</b> - especially during this '16/17 season with the epic snow conditions we're seeing, weekend traffic to Tahoe can be as bad as Los Angeles during rush hour. To minimze your time spent in a car and maximize your time outside, we recommend leaving the Bay Area before 2pm on Fridays or after 7pm (leaving the office 'early' at 330pm doesn't actually help.) Likewise, on the drive back on Sunday, it's best to either hit the road before 3pm, or to just take your time, have an early dinner, and then leave Tahoe after 530pm.
+                    </li>
+                    <br>
+                    <li> Both major highways are subject to <a href="http://www.dot.ca.gov/hq/roadinfo/chcontrl.htm" class="green-link" target="_blank">chain control</a> almost anytime that it snows, and do occasionally close down completely due to unsafe visibility or avalanche risk. </li>
+                    <img src="https://s3.amazonaws.com/snowschoolers/thule-easy-fit-tire-chains.jpg" alt="tire chains" class="tire-chains-photo float-right-unless-desktop">
+                    <br>
+                    <li> For those new to winter driving, <b> chains </b> are like metal crampons that wrap around your tires to help with traction on snow and ice. When chain control is in effect, there will be a check point operated by CalTrans where you will be forced to put on chains (and buy them if you don't have any) in order to proceed, unless you have a vehicle with 4-wheel drive and snow tires.
+                    <br>
+                    <br>
+                    </li>
+                    <li> It's always best to check <a href="http://www.dot.ca.gov/hq/roadinfo/mtnhwys.htm" class="green-link" target="_blank"> road conditions</a> before your trip. You can also <a href="https://twitter.com/snowschoolers" class="btn btn-default twitter">follow us on Twitter</a> to get crucial updates about road conditions.
+                    </li>
+                    <br>
+                    <li>
+                      While the drive from the Bay Area to Tahoe is <b>typically</b> around 3.5 hours, be aware that traffic and weather can sometimes combine to double or even triple your driving time. As such, always be sure to start with a full tank of gas, and have some extra snacks or water in the car, especially when traveling with children.
+                    </li>
+                    <br>
+                    <li>
+                      <b>Popular pit stops</b> - 3+ hours is a long-time to be in a car, whether you're 4 years old or 40, so here are a few good places to stop and refuel.
+                      <ul class="inner-carpool-list">
+                        <li><a href="https://www.yelp.com/biz/ikedas-california-country-market-auburn" class="green-link">Ikeda's Burgers & Pies</a> - in Auburn (exit 122 on I-80) - this would be a great stop even if they only sold burgers. But their pies... so good you'll want to order at least one extra for the road. Plus the market next store is like a mini-Trade Joe's with great produce & basic essentials for the weekend.</li>
+                        <br>
+                        <li><a href="https://www.google.com/maps/place/Chick-fil-A/@38.4483605,-122.2979122,9z/data=!4m8!1m2!2m1!1schick+fil+a!3m4!1s0x0:0x28bcf2f043255c3c!8m2!3d38.2588063!4d-122.0598221" class="green-link">Chic-fil-A</a> - while we will probably never find one within the city limits of San Francisco, I-80 is dotted with five Chic-Fil-A locations along the way, from Vallejo (exit 33) to Roseville (exit 106).</li>
+                        <br>
+                        <li><a href="https://www.yelp.com/biz/z-pie-placerville" class="green-link">Z-Pie</a> - in Placerville (exit 46 on US-50) also has great pies, of a different variety. Their gourmet pot pies are made fresh daily, and make for a hearty snack or quick dinner after a fun day on the mountain.</li>
+                        <br>
+                        <li>
+                          <a href="https://www.yelp.com/biz/the-coconut-on-t-sacramento-3" class="green-link">Coconut on T</a> - in downtown Sacramento just off of I-80 Business before it turns into US-50, terrific curry's and pad thai. Their old location was constantly overcrowded, so with the bigger new location, you likely won't even have to wait more than a few minutes to be seated.
+                        </li>
+                        <!-- <li>Sacramento Thai</li> -->
+                      </ul>
+                    </li>
+                    <br>
+                    <li><b>Don't want to drive yourself?</b> There's two carpool-friendly for those without cars:
+                      <ul class="inner-carpool-list">
+                        <li>The <a href="https://www.bayareaskibus.com/?utm_campaign=SnowSchoolers_beginner_guide" class="green-link" target="_blank">Bay Area Ski Bus</a> is exactly what it sounds like. With 10+ pickup locations in San Francisco, the south bay, and the east bay, they'll take you to and from Tahoe on a day trip to various resorts for just $165, which includes your lift ticket and a continental breakfast. Bay Area Ski Bus has been around since 1996 and is the biggest operator we know of, but there's also a few others now offering similar routes, such as <a href="http://www.tahoesnowandsun.com/sf.html" class="green-link" target="_blank">Tahoe Snow and Sun Tours</a> and the soon-to-launch <a href="https://www.tahoetechbus.com/" class="green-link" target="_blank">Tahoe Tech Bus</a> from downtown SF, as well as <a href="http://us.megabus.com/" class="green-link" target="_blank">MegaBus.com</a> if you are coming from Sacramento.
+                        </li>
+                        <br>
+                        <li><a href="http://www.snowpals.org/info/tahoe-rideshare/?utm_campaign=SnowSchoolers_beginner_guide" class="green-link" target="_blank">SnowPals.org</a> is one of the oldest online communities of Tahoe skiers & snowboarders living in the Bay Area, and they offer a free rideshare mailing list to coordinate carpools with over 7,800 members. People can post ride offers or request, and passengers are typically expected to chip in for the cost of gas and tolls. </li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <hr class="deposit-hr-navy">
+              <h2 class="navy-text center"> Tips for Flying to Lake Tahoe</h2>
+                 <ul class="north-vs-south navy-text">
+                    <li>A brand new service launched in 2017 called <a href="http://flyblackbird.com/?utm_campaign=SnowSchoolers_beginner_guide" class="green-link" target="_blank">BlackBird</a>, which offers direct flights from Palo Alto to Truckee for just $125! Offering a "private flight experience at a budget airline price", they'll get you to Tahoe in 45minutes vs. a 3-5 hour drive.</li>
+                    <br>
+                    <li>If you're flying in from afar, the Reno International airport is the closest major airport and is about an hour from North Tahoe and 1hr 15min to South Lake. Reno is often considered the "the Biggest Little City" destination for gambling, so if that's your thing, worth spending your first night in town. Once there, you'll have plenty of options for eithering renting a car or taking one of many <a href="https://www.visitrenotahoe.com/reno-tahoe/transportation/shuttles" class="green-link" target="_blank">ski shuttles</a> that run from Reno to the ski resorts.
+                    </li>
+                    <br>
+                    <li>
+                    If you want to maximize your days on the mountain within a budget, keep in mind that most resorts will offer you a <a href="http://www.skilaketahoe.com/ski-for-free-on-the-same-day-you-arrive/" class="green-link" target="_blank">free or discounted lift ticket on the same day you fly</a>, so hold on to that boarding pass.</li>
+              </ul>
+          </div>
+          <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>
+    </section>
+
+     <section class="bg-primary" id="accommodations">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xs12 text-center">
+                    <h2 class="section-heading how-it-works white-text">Places to Stay</h2>
+                    <%= render "welcome/accommodations" %>
+                    <hr class="light text-center">
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section class="bg-white" id="resorts">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xs12 text-center">
+                    <%= render "welcome/resorts" %>
+                    <hr class="light text-center">
+                    <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section class="bg-white" id="tickets-and-rentals">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xs12 text-center">
+                    <%= render "welcome/tickets-and-rentals" %>
+                    <hr class="light text-center">
+                    <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section class="bg-primary" id="other-activities">
+        <div class="container">
+            <h2 class="section-heading how-it-works white-text center">Other Things to Do</h2>
+            <%= render "welcome/things_to_do" %>
+            <hr class="light text-center">
+            <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>                    
+        </div>
+    </section>
+
+     <section class="bg-white" id="places-to-eat">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xs12 text-center">
+                    <h2 class="section-heading how-it-works navy-text">Places to Eat</h2>
+                    <%= render "welcome/places_to_eat" %>
+                    <hr class="light text-center">
+                    <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section class="bg-primary" id="apres">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xs12 text-center">
+                    <h2 class="section-heading how-it-works white-text">Après ski, bars & nightlife</h2>
+                    <%= render "welcome/apres" %>
+                    <hr class="light text-center">
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <div class="col-md-12">
+      <h2 class="white-text center">Trip planned already, and now you're ready to book a lesson?</h2>
+      <h3 class="center">
+          <a href="lessons/new" class="btn btn-primary btn-xl page-scroll powder-btn">Book a Lesson at Homewood</a>
+      </h3>
+      <hr class="light text-center">
+  </div>
+
+<section id="contact" class="bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading white-text"><b>Still have questions? Let us know!</b></h2>
+                    <hr class="primary">
+                    <p class="white-text">Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 text-center">
+                    <i class="fa fa-phone fa-3x sr-contact"></i>
+                    <p class="white-text">(530)430-SNOW</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
+                    <p><a href="mailto:info@snowschoolers.com" class="white-text" target="_blank">info@snowschoolers.com</a></p>
+                </div>
+            </div>
+        </div>
+    <h4 class="center"><a href="#TOC" class="btn btn-default">Back to Top</a></h4>
+    </section>
+
+<script src="//load.sumome.com/" data-sumo-site-id="a1fbda8d7365cdee08d4a5985659bb680581b2dd4281ce27f0f246ffaa655693" async="async"></script>

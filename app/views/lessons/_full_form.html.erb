@@ -1,0 +1,226 @@
+  <div id="lesson-flow-background">
+      <img src="https://s3.amazonaws.com/snowschoolers/images/demo/slider/thredbo-village-resort-hero.jpg" alt="" />
+  </div>
+
+<div id="middle" class="container">
+  <div class="white">
+
+    <header class="page-header">
+      <h1>Update Your Lesson</h1>
+    </header>
+
+    <% if current_user && (current_user.user_type == "Snow Schoolers Employee" || current_user.email == "bbensch@gmail.com") %>
+    <div id="autofill-container" class="admin-viewable">
+      <a href="#fill" id="autofill_complete_form" class="btn btn-primary">Autofill Form</a>
+    </div>
+    <% end %>
+
+    <%= semantic_form_for @lesson do |f| %>
+      <%= f.semantic_errors :instructor %>
+      <%= hidden_field_tag 'ga_client_id', '', :class => 'ga-client-id' %>
+      <% if current_user && (current_user.email == "brian@snowschoolers.com")%>
+        <div class="admin-viewable">
+          <div class="col-md-12 vertical-padding">
+          <h4> ADMIN ONLY: Select user email to assign this lesson to a new requester.</h4>
+              <div class="col-md-4">
+                <label> Assign to User: </label> <br>
+                <%= f.select :requester_id, options_from_collection_for_select(User.all.sort {|a,b| a.username_for_admin <=> b.username_for_admin}, :id, :username_for_admin, selected:@lesson.requester_id), include_blank:true %>
+              </div>
+              <div class="col-md-4">
+                <label>Number of Days</label>
+                <%= f.input :num_days, as: :string, placeholder: "How many consecutive days?", label: false %>
+              </div>
+            <div class="col-md-4">
+                <label>Includes a lift ticket and/or rental package?</label>
+                <%= f.input :includes_lift_or_rental_package, as: :radio, :collection=> [true, false], label: false %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+                <label>Is gift voucher?</label>
+                <%= f.input :is_gift_voucher, as: :radio, :collection=> [true, false], label: false %>
+            </div>
+            <div class="col-md-4">
+                <label>Gift Recipient Name</label>
+                <%= f.input :gift_recipient_name, as: :string, placeholder: "Full Name", label: false %>
+            </div>
+            <div class="col-md-4">
+                <label>Gift Recipient Email</label>
+                <%= f.input :gift_recipient_email, as: :string, placeholder: "Email", label: false %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Package info</label>
+                <%= f.input :package_info, as: :text, placeholder: "Includes one adult lift ticket for $64", label: false %>
+            </div>
+            <div class="col-md-2">
+              <label>Direct Lesson Cost</label>
+              <%= f.input :lesson_cost, as: :string, placeholder: "Enter custom price", label: false %>
+            </div>
+            <div class="col-md-2">
+              <label>Non-Lesson Cost</label>
+              <%= f.input :non_lesson_cost, as: :string, placeholder: "Enter custom price", label: false %>
+            </div>
+            <div class="col-md-2">
+              <label>Total Price</label>
+              <%= f.input :lesson_price, as: :string, placeholder: "Enter custom price", label: false %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <% if current_user.nil? || current_user.email == "brian@snowschoolers.com" %>
+      <div class='row'>
+        <div class="col-md-6">
+          <h4>Book as a <strong>Guest</strong> | Or <a href="#" class="btn btn-default" data-toggle="modal" data-target="#loginModal">Sign-in to your Account</a></h4>
+              <label>Email</label>
+              <%= f.input :guest_email, as: :string, placeholder: "email@example.com", label: false %>
+        </div>
+      </div>
+      <% end %>
+      <div class='row'>
+        <div class="col-md-6">
+          <h4>Basic <strong>Info</strong></h4>
+
+          <div class='row'>
+
+            <div class="col-md-6">
+              <label>Lesson Type</label>
+              <%= f.input :activity, as: :select, collection: ['Ski', 'Snowboard','Telemark'], include_blank: 'Lesson Type', label: false %>
+            </div>
+
+            <div class="col-md-6">
+              <label>Location</label>
+                <%= f.input :requested_location , as: :select, collection: Location.active_partners.sort_by { |location| location.name.downcase} , selected: Location.active_partners.first.id, include_blank: 'Location', label: false %>
+            </div>
+
+          </div>
+          <%= f.semantic_fields_for :lesson_time, @lesson_time do |lt_f| %>
+            <div class='row'>
+              <div class="col-md-4">
+                <label>Date</label>
+                <%= lt_f.input :date, as: :string, input_html: { id: 'datepicker' }, placeholder: 'Pick a date', label: false %>
+                <span class="search-area-icon"></span>
+              </div>
+
+              <div class="col-md-4">
+                <label>Slot</label>
+                <%= lt_f.input :slot, as: :select, collection: ['Early Bird (9-10am)', 'Half-day Morning (10am-1pm)', 'Half-day Afternoon (1pm-4pm)','Full-day (10am-4pm)'], include_blank: 'Time', label: false %>
+
+              </div>
+          <% end %>
+            <div class="col-md-4">
+              <label>Price</label>
+                <h2> <span id="lesson-price"><%= number_to_currency(@lesson.price) %></span></h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Your Name</label>
+                <%= f.input :requester_name, as: :string, value: current_user ? current_user.name : "", required: true, label: false %>
+              </div>
+              <div class="col-md-6">
+                <label>Cell Phone</label> <span class="text-smaller">(Shared only with your instructor).</span>
+                <%= f.input :phone_number, as: :string, placeholder: 'xxx-xxx-xxxx', required: true, label: false %>
+              </div>
+            </div>
+
+          <div class='row'>
+            <div class="col-md-6">
+              <label>Do you have equipment?</label>
+              <%= f.input :gear, as: :select, collection: [['Yes, I already have my equipment.', true], ['No, I will need to rent equipment.', false]], include_blank: '(Skis,boots,etc.)', label: false, required:true %>
+            </div>
+            <div class="col-md-6">
+              <label>Have a lift ticket or pass?</label>
+              <%= f.input :lift_ticket_status, as: :select, collection: [['Yes, I have one.', true], ['No, I still need one.', false]], include_blank: 'Choose one', label: false, required:true %>
+            </div>
+
+            <div class="col-md-12">
+            <!-- Price ($75 per hour): $<span id="donation-amount"><%= @lesson.price %></span>.00 -->
+            </div>
+          </div>
+
+          <h4>Student <strong>Info</strong></h4>
+          <!-- <div id="previous_students">
+            % if current_user.students %>
+            <h4>This lesson is for the previously entered student(s) below.</h4>
+              %= f.select :id, options_from_collection_for_select(current_user.students, :id, :name), {}, {required: false, class: 'form-control'} %>
+            % end %>
+          </div> -->
+          <div id='lesson_students_input'>
+            <%= f.semantic_fields_for :students do |student| %>
+              <%= render 'student_fields', f: student %>
+            <% end %>
+            <h3 class="text-warning hidden" id="ability-level-warning">Warning - students must all be within one level of each other in order to participate in the same lesson.</h3>
+            <div class='links'>
+              <%= link_to_add_association 'Add Another Student', f, :students, class: 'btn btn-default', id:'add-student-button' %>
+            </div>
+            <%= f.semantic_errors :students %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <h4>Lesson  <strong> Objectives</strong></h4>
+
+<!--           <div class='col-md-12'>
+            <label>If you had to choose one focus area for this lesson, what would it be?</label>
+            <%= f.input :focus_area, as: :select, collection: ['Basics (for beginners and intermediates)','Advanced Racing Technique', 'Moguls','Terrain Park','Powder Skiing','Big-Mountain Skiing'], include_blank: 'Select a focus area', input_html: {class: 'width100'}, required: false, label: false %>
+          </div> -->
+         <div class='col-md-12'>
+            <label>What is your primary objective for the lesson? <br> Is there anything specific you want your instructor to know?</label>
+            <%= f.input :objectives, placeholder: 'i.e. my child has a fear of heights, my child has special needs, I tore my ACL three years ago, etc.', required: false, label: false %>
+          </div>
+          <div class="col-md-12">
+            <label>How did you first hear about Snow Schoolers?</label>
+            <%= f.select :how_did_you_hear, [['From a friend',1],['Facebook',2],['Google',3],['I took a previous lesson',10],['From a postcard',4],['From someone at Homewood',5],['Tahoe Daves',6],['Ski Butlers',7],['Yelp',8],['Snowglers',9],['Other',100]], {}, {class: 'form-control', required:true, include_blank:false} %>
+          </div>
+          <div class="col-md-12">
+            <span class="remember-box checkbox ">
+              <label for="rememberme">
+                  <%= f.check_box :terms_accepted, id: "rememberme", required: true  %>I agree to the <span><a href="/terms_of_service" target="_blank">Terms and Conditions</a></span>
+              </label>
+            </span>
+        </div>
+
+          <div class="col-md-9">
+          <% if @lesson.state == 'new' %>
+            <!-- <h4>Review <strong> Lesson Request</strong></h4> -->
+            <% button_text = "Continue to Payment" %>
+            <% else %>
+            <h4>Update <strong> Lesson Request</strong></h4>
+            <% button_text = "Update Lesson Request" %>
+          <% end %>
+          </div>
+          <div class="col-md-3">
+            <%= f.input :state, as: :hidden, input_html: { value: @state } %>
+            <%= f.submit button_text, class: 'btn sign-up-btn pull-right' %>
+          </div>
+
+        </div>
+      </div>
+
+      <hr class='lesson-break' />
+
+      <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <hr>
+
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+<!-- SLIDER -->
+<!-- <img id="cycle-loader" src="https://s3.amazonaws.com/snowschoolers/images/spinner.gif" alt="loader" /> -->
+
+<!-- <div id="lesson-flow-background">
+      <img src="https://s3.amazonaws.com/snowschoolers/images/demo/slider/thredbo-village-resort-hero.jpg" alt="" />
+</div> -->
+
+<ul id="slider" class="mc-cycle" style="display: block; height: 100%; width: 100%;">
+    <div class="mc-image bg-photo" title="background photo" style="background-image: url('https://s3.amazonaws.com/snowschoolers/images/demo/slider/thredbo-village-resort-hero.jpg'); height: 100%; width: 100%;" data-href=""    
+    </div>
+</ul>

@@ -1,0 +1,79 @@
+<div class="container">
+<p>
+  <strong>User Email:</strong>
+  <% if @instructor.user %>
+      <%= @instructor.user.email %>
+    <% else %>
+      <%= @instructor.username %>
+  <% end %>
+</p>
+<div class="col-lg-12 col-sm-12 square-image">
+    <%= image_tag @instructor.avatar.url(:large), alt:"avatar-img", class:"img-responsive img-circle instructor-photo avatar-left" %>
+  </div>
+<p>
+  <strong>Name:</strong>
+  <%= @instructor.name %>
+</p>
+<p>
+  <strong>City:</strong>
+  <%= @instructor.city %>
+</p>
+
+<p>
+  <strong>Certification:</strong>
+  <%= @instructor.certification %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @instructor.phone_number %>
+</p>
+
+<p>
+  <strong>Sport:</strong>
+  <% if @instructor.ski_instructor? %>
+  Skiing <img src= "/assets/skier-icon.ico" class="icons">
+  <% end %>
+  <% if @instructor.snowboard_instructor? %>
+  Snowboarding <img src= "/assets/snowboarder-icon.png" class="icons">
+  <% end %>
+  <% if @instructor.telemark_instructor? %>
+  Telemark <img src= "/assets/telemark-icon.png" class="tele-icon">
+  <% end %></p>
+
+<p>
+  <strong>Resorts Preferences:</strong>
+  <ul>
+    <% @instructor.locations.each do |location| %>
+    <li> <%= location.name %> </li>
+    <% end %>
+  </ul>
+</p>
+
+<p>
+  <strong>Intro:</strong>
+  <%= @instructor.intro %>
+</p>
+
+<p>
+  <strong>Preferred Resorts:</strong>
+  <%= @instructor.preferred_locations %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @instructor.status %>
+</p>
+
+<p>
+  <strong>Referral Source:</strong>
+  <%= @instructor.referral_source %> 
+</p>
+
+<% if current_user && current_user.email == 'brian@snowschoolers.com' %>
+<%= link_to 'Edit', edit_instructor_path(@instructor) %> |
+<%= link_to 'Verify Instructor', edit_user_registration_path(@instructor.user), class: 'btn btn-success' %> |
+<% end %>
+<%= link_to 'Back', instructors_path %>
+<div class="buffer"></div>
+</div>

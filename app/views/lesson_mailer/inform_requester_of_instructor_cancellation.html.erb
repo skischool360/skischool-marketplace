@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <% if @lesson.requester %>
+      <p>Hello <%= @lesson.requester.name.split(" ").first %>,</p>
+    <% else %>
+      <p>Hello <%= @lesson.guest_email %>,</p>
+    <% end %>
+    <h4>Lesson Change Notice</h4>
+    <p>
+      Unfortunately, your previously assigned instructor is no longer available for your lesson:
+    </p>
+    <ul>
+      <li>Students: <%= @lesson.students.map(&:name).join(', ') %></li>
+      <li>Date: <%= @lesson.date %></li>
+      <li>Slot: <%= @lesson.slot %></li>
+      <li>Location: <%= @lesson.location.name %></li>
+    </ul>
+    <p>
+      <% if @available_instructors %>
+        The good news is that there are other instructors available and we
+        are currently trying to find you a replacement.
+      <% else %>
+        Unfortunately, no other instructors are available at this time. We
+        apologize for the inconvenience. Please go to your lesson page and
+        either update your preferences or cancel the lesson if you are no
+        longer interested.
+      <% end %>
+    </p>
+    <p>
+      If you need to make changes to your lessons, please visit: <%= lesson_url(@lesson) %>
+    </p>
+    <p>If you have any other questions at this time, please don't be afraid to reach out. Happy Trails!</p>
+    <p>
+      - Brian Bensch <br>
+      Founder, SnowSchoolers.com <br>
+      brian@snowschoolers.com
+    </p>
+  </body>
+</html>

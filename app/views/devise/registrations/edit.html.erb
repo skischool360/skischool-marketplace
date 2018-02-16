@@ -1,0 +1,100 @@
+<div id="middle" class="container">
+  <div class="white">
+
+    <header class="page-header">
+      <h1>Edit Profile</h1>
+    </header>
+
+    <!-- UPDATE PROFILE -->
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="row">
+        <div class="col-md-6">
+
+          <h4>Basic <strong>Info</strong></h4>
+
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-12">
+                <%= f.label :name %><br />
+                <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-12">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p></p>
+            <div class="col-md-6">
+              <%= link_to "Return to previous page", :back, class: 'btn btn-warning pull-right' %>
+            </div>
+            <div class="col-md-6">
+              <%= f.submit "UPDATE", class: 'btn sign-up-btn pull-right' %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+    <!-- /UPDATE PROFILE -->
+
+
+        <div class="col-md-6">
+          <div class="facebook-box">
+            <div class="row title">
+              <div class="col-md-12">
+                <div class="text">Interested in teaching? Apply to become an instructor:</div>
+              </div>
+            </div>
+
+            <div class="row button">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <%= link_to "Become an Instructor", new_instructor_path, class: "btn sign-up-btn form-control" %><br />
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<div class="col-md-12">
+  <hr class="deposit-hr-navy">
+</div>
+
+    <!-- CALLOUT -->
+      <div class="row">
+
+        <div class="col-md-12 col-sm-6"><!-- left text -->
+          <h4 class="nomargin">Cancel <strong>Your Account</strong></h4>
+            <%= link_to "CANCEL ACCOUNT", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, class: "btn btn-danger" %>
+          <p class="nomargin">
+            We hope you'll give Snow Schoolers another shot at some point in the future!
+          </p>
+        </div><!-- /left text -->
+
+
+        <div class="col-md-6 col-sm-6 text-left"><!-- right btn -->
+        </div><!-- /right btn -->
+
+      </div>
+
+    </div>
+    <!-- /CALLOUT -->
+
+
+  </div>
+</div>
+
+<!-- SLIDER -->
+<!-- <img id="cycle-loader" src="https://s3.amazonaws.com/snowschoolers/images/spinner.gif" alt="loader" /> -->
+
+<div id="lesson-flow-background">
+      <img src="https://s3.amazonaws.com/snowschoolers/images/demo/slider/chamonix-skiing.jpg" alt="" />
+</div>
+<!-- /SLIDER -->

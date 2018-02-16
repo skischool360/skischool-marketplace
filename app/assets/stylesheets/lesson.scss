@@ -1,0 +1,176 @@
+.medium-text p{
+  font-size: 1.5em;
+}
+.form-control:visited{
+  color:white;
+  }
+.spacer{
+  min-height:50px;
+  clear:both;
+}
+.instructors-table{
+  padding: 5 5 5 5px;
+  border: 1px solid gray;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.instructors-table tbody tr td, .instructors-table thead tr th {
+    padding-left: 20px;
+    font-size: 0.9em;
+}
+.instructors-table thead {
+  font-size: 1.3em;
+  border: 1px solid gray;
+  background-color: rgba(0,60,128,0.3);
+}
+.complete-payment{
+}
+.payment-amounts{
+  font-size: 1.2em;
+  left: -20px;
+  position: relative;
+  width: 110%;
+}
+.new-lesson-ctas-list li{
+  display: inline-block;
+  list-style-type: none;
+}
+#browser-instructors-cta, #lesson_submit_action{
+  position: relative !important;
+}
+#lesson_students_attributes_0_other_sports_experience {
+  max-height: 100px;
+}
+.preSeasonModal{
+  padding: 20px 20px 20px 20px !important;
+}
+#smartwaiver_floater{
+    position: fixed !important;
+    height: 100px !important;
+    width: 100vw !important;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 60px;
+    line-height: 28px;
+}
+.nonrefundable_disclaimer{
+  font-size: 0.8em;
+}
+.duration-and-feedback{
+  display:block;
+  position: relative;
+  font-size: 1.2em;
+}
+.text-smaller{
+  font-size: 0.9em;
+}
+
+.time-slot-input{
+  width: 11%;
+  float: left;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.guest-email-input{
+  width: 23%;
+  float: left;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+/*DESKTOP ONLY ADJUSTMENTS*/
+@media (min-width: 768px) {
+.payment-amounts{
+  font-size: 1.6em;
+  line-height: 1.6;
+}
+}
+
+/*MOBILE ADJUSTMENTS*/
+@media (max-width: 768px) {
+.instructors-table{
+  padding: 2 2 2 2px;
+  border: 1px solid gray;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.instructors-table tbody tr td, .instructors-table thead tr th {
+    padding-left: 20px;
+    font-size: 0.8em;
+}
+.instructors-table thead {
+  font-size: 1.2em;
+  border: 1px solid gray;
+  background-color: rgba(0,60,128,0.3);
+}
+.lessons-table-cells{
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+.lesson-type{
+    width: 140px;
+}
+.lesson-student{
+  width:100px;
+}
+.lesson-date{
+  width: 30px;
+}
+.lesson-instructor{
+  width: 60px;
+}
+.slot-details-mobile{
+  font-size: 1.2em
+}
+#new_lesson{
+  height:90vh;
+}
+#slider .caption{
+  bottom: 0px;
+  position: fixed;
+}
+.instructor-selection{
+  max-height: 180px;
+}
+.instructor-photo{
+  height: 120px;
+}
+h3{
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+#footer ul li a {
+    display: block;
+    margin: 0px 0 0 6px;
+    font-size: 0.7em;
+}
+#footer {
+  padding: 0px 5px 0px 5px;
+}
+#footer ul {
+  bottom: 3px;
+  position: relative;
+  float: none;
+  margin: auto;
+}
+#footer{
+  height: 25px;
+}
+.time-slot-input{
+  width: 100%;
+  float: left;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.guest-email-input{
+  width: 100%;
+  float: left;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+
+
+}

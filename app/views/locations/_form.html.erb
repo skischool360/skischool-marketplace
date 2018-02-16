@@ -1,0 +1,47 @@
+<div class="container">
+<%= semantic_form_for @location do |f| %>
+  <%= f.inputs do %>
+    <%= f.action :submit, :as => :input %>
+    
+    <%= f.input :name %>
+    <%= f.input :logo %>
+    <%= f.input :closing_date, as: :string, input_html: { id: 'datepicker', value:@location.closing_date }, placeholder: 'Closing Date', label: false %>
+    <%= f.input :region, as: :select, collection: ['North Tahoe','South Lake Tahoe','Central CA','Southern CA','Northern California','Utah','Colorado','Wyoming','Idaho','Oregon','Washington','New Mexico'] %>
+    <%= f.input :state, as: :select, collection: ['California','Nevada','Utah','Colorado','Wyoming','Idaho','Oregon','Washington','New Mexico'] %>
+    <%= f.label :city %>
+    <%= f.text_field :city, placeholder: 'City', class: 'form-control', required:true %>
+    <%= f.label :state_abbreviation %>
+    <%= f.text_field :state_abbreviation, placeholder: 'ST', class: 'form-control', required:true %>
+    <%= f.label :address %>
+    <%= f.text_field :address, placeholder: 'Physical address', class: 'form-control', required:true %>
+    <br>
+    <%= f.input :partner_status, as: :select, collection: ['Active','Inactive'] %>
+    <%= f.input :calendar_status, as: :select, collection: ['Regular','Peak','Holiday'] %>
+    <%= f.label :vertical_feet %>
+    <%= f.text_field :vertical_feet, placeholder: 'Vertical Feet', class: 'form-control', required:true %>
+    <br>
+    <%= f.label :base_elevation %>
+    <%= f.text_field :base_elevation, placeholder: 'Base Elevation', class: 'form-control', required:true %>
+    <br>
+    <%= f.label :peak_elevation %>
+    <%= f.text_field :peak_elevation, placeholder: 'Peak Elevation', class: 'form-control', required:true %>
+    <br>
+    <%= f.label :skiable_acres %>
+    <%= f.text_field :skiable_acres, placeholder: 'Skiable Acres', class: 'form-control', required:true %>
+    <br>
+    <%= f.label :average_snowfall %>
+    <%= f.text_field :average_snowfall, placeholder: 'Avg. Snowfall', class: 'form-control', required:true %>
+    <br>
+    <%= f.label :lift_count %>
+    <%= f.text_field :lift_count, placeholder: 'How many total lifts?', class: 'form-control', required:true %>
+    <br>
+    <%= f.label :night_skiing, "Is there night skiing?" %>
+    <%= f.input :night_skiing, :label => "Yes", class: 'form-control', required:true %>
+    <br>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :as => :input %>
+  <% end %>
+<% end %>
+</div>

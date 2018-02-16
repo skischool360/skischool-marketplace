@@ -1,0 +1,44 @@
+<div class="container">
+<h1 class="center"><%= current_user.instructor.first_name %>'s Calendar Blocks</h1>
+<p>By blocking your calendar ahead of time, the system knows you are unavailable and will not send you SMS requests during these times.</p>
+<h4 class="alert-warning">
+  Note that selecting "Full-day 10am-4pm" will actually block your calendar from receiving less requests for the entire day, including early birds. If you would like to be eligible for early birds but not the 10am-4pm window, please contact Brian at <a href="mailto:brian@snowschoolers.com">brian@snowschoolers.com.</a>
+</h4>
+<table class="instructors-table">
+  <thead>
+    <tr>
+<!--       <th>ID</th>
+      <th>Instructor</th>
+      <th>Lesson time ID</th> -->
+      <th>Instructor</th>
+      <th>Date blocked</th>
+      <th>Slot blocked</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @calendar_blocks.each do |calendar_block| %>
+      <tr>
+<!--         <td><%= calendar_block.id %></td>
+        <td><%= calendar_block.instructor_id %></td>
+        <td><%= calendar_block.lesson_time_id %></td> -->
+        <td><%= Instructor.find(calendar_block.instructor_id).name %></td>
+        <td><%= calendar_block.lesson_time.date.strftime("%a, %b %d") %></td>
+        <td><%= calendar_block.lesson_time.slot %></td>
+        <td><%= calendar_block.status %></td>
+        <td><%= link_to 'Show', calendar_block %></td>
+        <td><%= link_to 'Edit', edit_calendar_block_path(calendar_block) %></td>
+        <td><%= link_to 'Destroy', calendar_block, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Calendar block', new_calendar_block_path, class: 'btn btn-primary' %>
+</div>

@@ -1,0 +1,39 @@
+:output:
+  Instructor:
+    :options:
+      :fields:
+        - id
+        - user_id
+        - first_name
+        - last_name
+        - username
+        - locations
+        - sports
+        - sport
+        - preferred_locations
+        - status
+        - overall_initial_rank
+        - kids_initial_rank
+        - adults_initial_rank
+  User:
+    :options:
+        :fields:
+        - id
+        - email
+        - user_type
+        - location_id
+
+  Lesson:
+    :options:
+      :fields:
+        - id
+        - instructor_id
+        - requester
+        - how_did_you_hear
+        - deposit_status
+        - lesson_time_id
+        - activity
+        - requested_location
+        - state
+        - duration
+        - start_time

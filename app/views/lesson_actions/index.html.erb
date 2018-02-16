@@ -1,0 +1,36 @@
+<h1>Listing lesson_actions</h1>
+
+<table class="instructors-table">
+  <thead>
+    <tr>
+      <th>Lesson URL</th>
+      <th>Instructor</th>
+      <th>Action</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lesson_actions.each do |lesson_action| %>
+      <tr>
+        <td><%= link_to "Lesson ID: #{lesson_action.lesson_id}", lesson_url(Lesson.find(lesson_action.lesson_id)), class:"btn btn-default" %>          
+        </td>
+         <% if Instructor.find(lesson_action.instructor_id) %>         
+          <td><%= link_to Instructor.find(lesson_action.instructor_id).name, instructor_path(Instructor.find(lesson_action.instructor_id)), class:"btn btn-success" %></td>
+          <% else %>
+          <td>Unknown</td>
+        <% end %>
+        <td><%= lesson_action.action %></td>
+        <td><%= link_to 'Show', lesson_action %></td>
+        <td><%= link_to 'Edit', edit_lesson_action_path(lesson_action) %></td>
+        <td><%= link_to 'Destroy', lesson_action, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lesson action', new_lesson_action_path %>

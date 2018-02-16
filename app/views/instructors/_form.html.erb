@@ -1,0 +1,157 @@
+
+<!-- REGISTER -->
+<div id="apply" class="navy-text">
+ <div class="apply-container">
+  <%= form_for @instructor do |f| %>
+  <% if @instructor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@instructor.errors.count, "error") %> prohibited this instructor from being saved:</h2>
+
+      <ul>
+      <% @instructor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <% if current_user && (current_user.email == "brian@snowschoolers.com" || current_user.user_type == "Partner")%>
+  <section class="admin-viewable">
+    <div class="col-md-12 vertical-padding">
+    <h4> ADMIN ONLY: Select user email to link to instructor application.</h4>
+      <%= f.select :user_id, options_from_collection_for_select(User.all.sort {|a,b| a.username_for_admin <=> b.username_for_admin}, :id, :username_for_admin, selected:@instructor_id), include_blank:true %>
+    <h4>Initial Adults Rank</h4>
+      <%= f.select :adults_initial_rank, [1,2,3,4,5,6,7,8,9,10], include_blank:false %>
+    <h4>Initial Kids Rank</h4>
+      <%= f.select :kids_initial_rank, [1,2,3,4,5,6,7,8,9,10], include_blank:false %>
+    <h4>Initial Overral Rank</h4>
+      <%= f.select :overall_initial_rank, [1,2,3,4,5,6,7,8,9,10], include_blank:false %>
+    </div>
+    <div class="col-md-12 vertical-padding">
+    <h4> Select eligibility for kids, seniors, and regular adults.</h4>
+    <label>Can teach kids?</label>
+      <%= f.select :kids_eligibility, [['Eligible',true],['Not Approved',false]], required:true %>
+    <label>Can teach seniors?</label>
+      <%= f.select :seniors_eligibility, [['Eligible',true],['Not Approved',false]], required:true %>
+    <label>Can teach regular adults?</label>
+      <%= f.select :adults_eligibility, [['Eligible',true],['Not Approved',false]], required:true %>
+    </div>
+  <div class="col-md-12">
+    <h4>Now select which ski levels the instructor is approved for:</h4>
+    <input type="checkbox" id="selectAllSkiLevels" value="selectAll"> Select / De-select All<br/><br/>
+    <%= f.collection_check_boxes :ski_level_ids, SkiLevel.all, :id, :name do |level| %>
+    <div class="collection-check-box">
+      <%= level.check_box(class: 'ski-checkbox') %>
+      <%= level.label %>
+    </div>
+    <% end %>
+    <br>
+  </div>
+  <div class="col-md-12">
+    <h4>Now select which snowboard levels the instructor is approved for:</h4>
+    <input type="checkbox" id="selectAllSnowboardLevels" value="selectAll"> Select / De-select All<br/><br/>
+    <%= f.collection_check_boxes :snowboard_level_ids, SnowboardLevel.all, :id, :name do |level| %>
+    <div class="collection-check-box">
+      <%= level.check_box(class: 'snowboard-checkbox') %>
+      <%= level.label %>
+    </div>
+    <% end %>
+    <br>
+  </div>
+</section>
+    <% end %>
+  <div class="complete-instructor-bio-section">
+    <% if current_user %>
+  <h4>Please attach a profile photo to complete your instructor profile.</h4>
+      <div class="col-md-12 vertical-padding">
+        <%= f.label :avatar %><br>
+        <%= f.file_field :avatar, class: 'form-control' %>
+      </div>
+  <h4>Please provide your age and a short bio to introduce yourself to prospective clients.</h4>
+  <div class="col-md-12">
+      <%= f.text_field :age, placeholder: 'age', class: 'form-control', required:true %>
+      <br>
+      <%= f.text_area :bio, rows:5, placeholder: 'Describe your background in a few sentences', class: 'form-control', required:true %>
+    <br>
+  </div>
+    <% end %>
+    <h4><b>Contact Info</b> </h4>
+    <div class="col-md-6 vertical-padding">
+      <%= f.text_field :first_name, placeholder: 'First name', class: 'form-control', required:true %>
+    </div>
+    <div class="col-md-6 vertical-padding">
+      <%= f.text_field :last_name, placeholder: 'Last name', class: 'form-control', required:true %>
+    </div>
+  </div>
+  <div class="">
+    <div class="col-md-6 vertical-padding">
+      <% if current_user %>
+      <%= f.text_field :username, value: current_user.email, class: 'form-control', required:true %>
+        <% else %>
+              <%= f.text_field :username, placeholder: "email@example.com", class: 'form-control', required:true %>
+      <% end %>
+    </div>
+    <div class="col-md-6 vertical-padding">
+      <%= f.text_field :phone_number, placeholder: 'Phone number', class: 'form-control' %>
+    </div>
+  </div>
+  <div class="col-md-6">
+  <h4> In what city are you based? </h4>
+    <%= f.text_field :city, placeholder: 'i.e. Tahoe City, CA', class: 'form-control', required:true %>
+    <br><br>
+  </div>
+  <div class="col-md-6">
+  <h4> What sports do you teach? </h4>
+  <%= f.collection_check_boxes :sport_ids, Sport.all, :id, :name do |sport| %>
+      <div class="collection-check-box form-control">
+        <%= sport.check_box %>
+        <%= sport.label %>
+      </div>
+      <% end %>
+    <br><br>
+  </div>
+  <!-- <h4> Preferred Resorts (select up to 4)</h4> -->
+  <h4> <b> Where:</b> We are currently recruiting for all ski areas in Northern California.</h4>
+  <div class="col-md-12">
+    <% if current_user && (current_user.email == "brian@snowschoolers.com" || current_user.user_type == "Partner") %>
+      <%= f.collection_check_boxes :location_ids, Location.all, :id, :name do |location_item| %>
+      <div class="collection-check-box">
+        <%= location_item.check_box %>
+        <%= location_item.label %>
+      </div>
+      <% end %>
+      <% else %>
+      <%= f.text_area :preferred_locations, placeholder: "Where are you most interested in teaching? Are there other resorts you would also consider? Let us know, and we'll be sure to match you with the best opportunity." , class: 'form-control', required:true %>
+    <% end %>
+    <br>
+  </div>
+  <h4><b>Professional certifications</b> (PSIA, AASI, etc.) </h4>
+  <div class="col-md-12">
+    <%= f.text_field :certification, placeholder: 'Do you hold any certifications?', class: 'form-control', required:true %>
+    <br>
+  </div>
+  <h4><b>Why</b> are you excited to join Snow Schoolers?</h4>
+  <div class="col-md-12">
+    <%= f.text_area :intro, rows:5, placeholder: 'Describe your background in a few sentences', class: 'form-control', required:true %>
+    <br>
+  </div>
+  <h4><b>How</b> did you first hear about Snow Schoolers?</h4>
+  <div class="col-md-6">
+    <%= f.select :how_did_you_hear, [['From a Friend',1],['Facebook',2],['Google',3],['From a Flyer',4],['Linkedin',5],['Other',100]], {}, {class: 'form-control', required:true, include_blank:false} %>
+  </div>
+  <%= hidden_field_tag 'ga_client_id', '', :class => 'ga-client-id' %>
+  <div class="row">
+    <div class="col-md-12 vertical-padding">
+      <% if controller.action_name == 'edit' %>
+      <%= f.submit "Update Instructor Profile", class: "btn btn-primary btn-xl page-scroll pull-right push-bottom" %>
+      <% else %>
+      <%= f.submit "Submit Application", class: "btn btn-primary btn-xl page-scroll pull-right push-bottom" %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>
+<div class="spacer">
+</div>
+
+</div>
+<!-- /REGISTER -->

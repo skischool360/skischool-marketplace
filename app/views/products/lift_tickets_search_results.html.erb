@@ -1,0 +1,75 @@
+<% title "Compare Lift Ticket Prices" %>
+<% meta_tag :description, "Snow Schoolers makes it easy for anyone to learn how to ski or snowboard. Use our simple season pass comparison tool to compare season pass prices for the '17/18 season across all Tahoe ski areas." %>
+
+<section id="header-creative" class="top-section section-pass-search-results">
+      <ul id="slider">
+          <li>
+              <img src="https://s3.amazonaws.com/snowschoolers/calm-before-storm-feb13.JPG" alt="lake tahoe" class="bg-photo-blurred" alt="" />
+          </li>
+      </ul>
+<div class="container">
+<div>
+  <h1 class="cnter shadow-box-highlight text-white">Compare Lift Ticket Prices throughout Tahoe</h1>  
+  <div class="other-search-verticals">
+    <a href="private-lessons" class="btn btn-primary btn-lg"> Shop Private Lessons</a>
+    <a href="learn-to-ski-packages" class="btn btn-primary btn-lg"> Shop Lesson Packages</a>
+    <a href="tahoe-season-passes" class="btn btn-primary btn-lg"> Shop Season Passes</a>
+    <!-- <a href="lift-tickets" class="btn btn-primary btn-lg"> Shop Lift Tickets</a> -->
+  </div>
+
+</div>
+<hr class="full-hr">
+
+<h3><a href="#filterOptions" class="btn btn-success hidden-unless-mobile" id="toggle-filter-options">Show Filter Options</a></h3>
+
+<div id="secondary-search-filters" class="hidden-unless-desktop">
+  <%= form_tag(lift_tickets_search_results_path, :method => "get", class: "pass-search-form") do %>  
+  <div id="sort-selector"
+      <h3>Sort Results By: </h3>
+      <%= select_tag :sort_tag, options_for_select(["Price Low to High","Price High to Low","North Tahoe Only","South Tahoe Only","Resorts A-Z"], params[:sort_tag]), {class: 'navy-text form-control'} %>
+      </h3>
+  </div>
+  <div id="search-widget hidden">
+      <%= text_field_tag :search, params[:search], placeholder: "Where do you love to ski...?", class:'navy-text form-control search-form hidden' %>
+  </div>
+  <div id="resort-filter">
+    <h3>Filter Resorts</h3>
+    <!-- <span class="text-danger"><em>(Please first clear any text-search above.)</em></span> -->
+    <ul class="resort-filter">
+        <%= collection_check_boxes :resort_filter, :location_ids, Location.tahoe_locations.sort_by { |location| location.name.downcase}, :id, :name do |location_item| %>
+        <li class="navy-text">
+          <%= location_item.check_box %>
+          <%= location_item.label %>
+        </li>
+        <% end %>
+    </ul>
+  </div>  
+  <div class="update-filter-cta">
+      <%= submit_tag "Update Filters", class:"btn btn-primary btn-xl mobile-btn-text" %>
+  </div>
+</div>
+      <!-- % end %> -->
+    <% end %>
+
+<div id="search-results-section">
+
+  <div class="notice">
+  <% if @products.present? %>
+  <% else %>
+    <p class="warning">Unfortunately there are no products matching your search.</p>
+    <% if current_user && current_user.email == "brian@snowschoolers.com" %>
+      <p class="warning admin-viewable">The full set of search parameters are: <%= @search_params %>.</p>
+    <% end %>
+  <% end %>
+  </div>
+
+<% @products.each do |product| %>
+
+  <%= render partial: "product_card", locals: {product: product} %>
+
+<% end %>
+
+  <p class="shadow-box-highlight white-text">Are we missing something? Or have prices changed? Let us know by emailing <a href="mailto:info@snowschoolers.com" class="green-link" target="_blank">info@snowschoolers.com</a></p>
+
+</div>
+</section>

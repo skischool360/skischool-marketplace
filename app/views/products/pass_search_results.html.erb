@@ -1,0 +1,84 @@
+<% title "Season Passes in Tahoe - Compare Prices" %>
+<% meta_tag :description, "Snow Schoolers makes it easy for anyone to learn how to ski or snowboard. Use our simple lift ticket price comparison tool to compare prices for the current '16/17 season across all Tahoe ski areas." %>
+
+<section id="header-creative" class="top-section section-pass-search-results">
+      <ul id="slider">
+          <li>
+              <img src="https://s3.amazonaws.com/snowschoolers/calm-before-storm-feb13.JPG" alt="lake tahoe" class="bg-photo-blurred" alt="" />
+          </li>
+      </ul>
+<div class="container">
+<div id="pass-search-header">
+  <h2 class="center">Lock in great savings on the '17/18 season!</h2>
+  <div class="shadow-box-highlight season-pass-subheader white-text"> 
+      <p>
+          After the snowiest winter in decades, most of Tahoe's <a href="resorts" class="green-link">16 ski areas</a> are now offering great deals on next year's season passes. When you buy today, you not only lock in the lowest price, you'll also enjoy the rest of this year's spring skiing for free!
+      </p>
+  </div>
+  <div class="other-search-verticals">
+    <a href="private-lessons" class="btn btn-primary btn-lg"> Shop Private Lessons</a>
+    <a href="learn-to-ski-packages" class="btn btn-primary btn-lg"> Shop Lesson Packages</a>
+    <!-- <a href="tahoe-season-passes" class="btn btn-primary btn-lg"> Shop Season Passes</a> -->
+    <a href="lift-tickets" class="btn btn-primary btn-lg"> Shop Lift Tickets</a>
+  </div>
+  
+ </div>
+<hr class="full-hr">
+ 
+<h3><a href="#filterOptions" class="btn btn-success hidden-unless-mobile" id="toggle-filter-options">Show Filter Options</a></h3>
+
+<div id="secondary-search-filters" class="hidden-unless-desktop">
+  <%= form_tag(pass_search_results_path, :method => "get", class: "pass-search-form") do %>  
+  <div id="sort-selector"
+      <h3>Sort Results By: </h3>
+      <%= select_tag :sort_tag, options_for_select(["Price Low to High","Price High to Low","North Tahoe Only","South Tahoe Only","Resorts A-Z"], params[:sort_tag]), {class: 'navy-text form-control'} %>
+      </h3>
+  </div>
+  <div id="search-widget hidden">
+      <%= text_field_tag :search, params[:search], placeholder: "Where do you love to ski...?", class:'navy-text form-control search-form hidden' %>
+  </div>
+
+<div id="pass-type-filter">
+  <h3>Pass Type</h3>
+  <%= select_tag :search_pass_type, options_for_select(["All Passes","Adult","Child","College"], params[:search_pass_type]), {class: 'navy-text form-control'} %>
+</div>
+
+  <div id="resort-filter">
+    <h3>Filter Resorts</h3>
+    <!-- <span class="text-danger"><em>(Please first clear any text-search above.)</em></span> -->
+    <ul class="resort-filter">
+        <%= collection_check_boxes :resort_filter, :location_ids, Location.tahoe_locations.sort_by { |location| location.name.downcase}, :id, :name do |location_item| %>
+        <li class="navy-text">
+          <%= location_item.check_box %>
+          <%= location_item.label %>
+        </li>
+        <% end %>
+    </ul>
+  </div>  
+  <div class="update-filter-cta">
+      <%= submit_tag "Update Filters", class:"btn btn-primary btn-xl page-scroll" %>
+  </div>
+</div>
+      <!-- % end %> -->
+    <% end %>
+
+<div id="search-results-section">
+
+  <div class="notice">
+  <% if @products.present? %>
+  <% else %>
+    <p>There are no products containing the term(s) "<%= params[:search] %>".</p>
+    <p>The full set of search parameters are: <%= @search_params %>.</p>
+  <% end %>
+  </div>
+
+<% @products.each do |product| %>
+
+  <%= render partial: "product_card", locals: {product: product} %>
+
+<% end %>
+
+  <p class="shadow-box-highlight white-text">Are we missing something? Or have prices changed? Let us know by emailing <a href="mailto:info@snowschoolers.com" class="green-link" target="_blank">info@snowschoolers.com</a></p>
+
+</div>
+</section>
